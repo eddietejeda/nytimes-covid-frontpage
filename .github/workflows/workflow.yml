@@ -4,16 +4,18 @@ on:
   push:
     branches:
     - master
+  schedule:
+  - cron: "0 13 * * 1"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    # - uses: actions/setup-ruby@v1
-    #   with:
-    #     ruby-version: '2.6' 
-    # - run: ruby build.rb
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.6'
+    - run: ruby build.rb
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
