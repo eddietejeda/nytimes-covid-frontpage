@@ -35,7 +35,7 @@ def save_json(results, filename)
 end
 
 
-start_date = DateTime.parse('2019-12-01').to_date # First reported covid case
+start_date = DateTime.parse('2019-11-01').to_date # A month before the first covid case
 end_date = Date.today
 
 download_nytimes_frontpage(start_date, end_date, "./download")

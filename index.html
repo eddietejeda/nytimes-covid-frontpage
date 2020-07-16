@@ -52,7 +52,7 @@
     previousSelector: "#previous",
     nextSelector: "#next",
     considerMissingDataAsZero: true,
-    legend: [0, 5, 8, 10],
+    legend: [0, 10, 20, 30],
   	onClick: function(d, nb) {
       var datestring = `${d.getFullYear()}/${("0"+(d.getMonth()+1)).slice(-2)}/${("0" + d.getDate()).slice(-2)}`
       window.location = `https://static01.nyt.com/images/${datestring}/nytfrontpage/scan.pdf`
