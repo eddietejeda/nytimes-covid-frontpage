@@ -8,7 +8,7 @@ require 'json'
 
 def download_nytimes_frontpage(start_date, end_date)
   ( start_date .. end_date ).each do |current|
-    filename = File.join("data", "pdfs", "#{current.to_s}.pdf")
+    filename = File.join("pdfs", "#{current.to_s}.pdf")
     unless File.file? filename
       puts "downloading... #{current.to_s}"
       File.open(filename, "wb") do |file|
@@ -21,7 +21,7 @@ end
 def generate_word_count_from_pdf
   puts "generating word count..."
   results = {}
-  Dir[File.join("data", "pdfs", "*.pdf")].each do |filename|
+  Dir[File.join("pdfs", "*.pdf")].each do |filename|
     reader = PDF::Reader.new(filename)
     reader.pages.each do |page|
       current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      

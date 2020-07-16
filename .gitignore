@@ -1,3 +1,4 @@
-data/pdfs/*.pdf
+data/*
+pdfs/*.pdf
 .DS_Store
 node_modules/
