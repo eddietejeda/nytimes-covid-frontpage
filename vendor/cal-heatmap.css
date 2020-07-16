@@ -2,6 +2,7 @@
 
 .cal-heatmap-container {
 	display: block;
+  margin-bottom: 20px;
 }
 
 .cal-heatmap-container .graph
@@ -32,7 +33,7 @@
 
 .cal-heatmap-container .subdomain-text {
 	font-size: 8px;
-	fill: #999;
+	fill: #ddd;
 	pointer-events: none
 }
 

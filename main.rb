@@ -16,13 +16,13 @@ def download_nytimes_frontpage(start_date, end_date, path)
   end
 end
 
-def count_words_in_pdf(path, words)
+def count_words_in_pdf(path)
   results = {}
   Dir["#{path}/*.pdf"].each do |filename|
     reader = PDF::Reader.new(filename)
     reader.pages.each do |page|
       current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
-      results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus))/).count)
+      results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
     end
   end
   results
@@ -35,11 +35,10 @@ def save_json(results, filename)
 end
 
 
-start_date = DateTime.parse('2019-11-01').to_date # A month before the first covid case
+start_date = DateTime.parse('2019-12-01').to_date # A month before the first covid case
 end_date = Date.today
 
 download_nytimes_frontpage(start_date, end_date, "./download")
-results = count_words_in_pdf("./download", [])
-save_json(results, "results.json")
+save_json(count_words_in_pdf("./download"), "results.json")
 
 

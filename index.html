@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <script type="text/javascript" src="./vendor/d3.min.js"></script>
   <script type="text/javascript" src="./vendor/cal-heatmap.min.js"></script>
-  <script type="text/javascript" src="./vendor/heatmap.config.js"></script>
   <link rel="stylesheet" href="./vendor/cal-heatmap.css" />
   <link rel="stylesheet" href="./vendor/normalize.css" />
   <link rel="stylesheet" href="./vendor/skeleton.css" />
@@ -24,14 +23,37 @@
 <body>
   
   <div class="container">
-    <div class="row">
-      <div class="column" style="margin-top: 15%; overflow: hidden">
-        <h4>Mentions of COVID on the NYTimes homepage</h4>
+    <div class="row" style="margin-top: 5%">      
+      <div class="column" style="margin-top: 0%;">
+        <h2>COVID19 mentions on the NYTimes front page</h2>
+        <div id="cal"></div>        
+      </div>
+      
+      <div class="row">
+        <div class="twelve columns ">
+          <button id="previous" class="u-pull-left" class="btn">&lt; Past</button>
+          <button id="next" class="u-pull-right" class="btn">Future &gt;</button>
+        </div>
+      </div>
 
-        <button id="previous" style="margin-bottom: 20px;" class="btn">&lt; Past</button>
-        <button id="next" style="margin-bottom: 20px;" class="btn">Future &gt;</button>
-        <div id="cal"></div>
+      <div class="row" style="margin-top: 5%">      
+        🔗 click on square to open PDF of NYTimes frontpage
+      </div>
+        
+      <div class="row" style="margin-top: 5%">      
 
+        <h5>Important Dates</h5>
+        <ul>
+          <li>December 6, 2019 - The first documented COVID-19 hospital admission.<sup><a href="https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic">1</a></sup></li>
+          <li>January 9, 2020 - WHO reported that Chinese authorities have determined that the outbreak is caused by a novel coronavirus.<sup><a href="https://www.who.int/news-room/detail/29-06-2020-covidtimeline">2</a></sup></li>          
+          <li>January 22, 2020 - New York Times front page article mentions a "pneumonia-like virus" in "As Infections Mount, Virus Poses Test for China" by Javier C Hernádez.</li>    
+          <li>January 28, 2020 - The first time COVID19 gets top billing on front page.</li>    
+          <li>February 11, 2020 - WHO announced that the disease caused would be named COVID-19. <sup><a href="https://www.who.int/news-room/detail/29-06-2020-covidtimeline">2</a></sup></li>
+        </ul>
+        
+
+        <h5>What is this site?</h5>
+        <p>I want to track how coverage of COVID19 changes over time and pin point exactly when the virus stops being front page news. This is a simple implementation that downloads a PDF of the New York Times front page and looks for the following key words: corona, covid, virus, pandemic, wuhan. Check out the <a href="https://github.com/eddietejeda/nytimes-covid-frontpage/">source code on Github</a> and let me know if you see any bugs.
       </div>
     </div>
   </div>
@@ -45,10 +67,12 @@
   cal.init({
   	itemSelector: "#cal",
   	domain: "month",
+  	subDomainTextFormat: "%d",
   	data: "results.json",
   	start: new Date(2020, 0),
   	cellSize: 25,
-  	range: 5,
+  	tooltip: true,
+  	range: 7,
     previousSelector: "#previous",
     nextSelector: "#next",
     considerMissingDataAsZero: true,
