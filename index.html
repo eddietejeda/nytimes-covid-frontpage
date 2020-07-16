@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="./vendor/d3.min.js"></script>
+  <script type="text/javascript" src="./vendor/cal-heatmap.min.js"></script>
+  <script type="text/javascript" src="./vendor/heatmap.config.js"></script>
+  <link rel="stylesheet" href="./vendor/cal-heatmap.css" />
+  <link rel="stylesheet" href="./vendor/normalize.css" />
+  <link rel="stylesheet" href="./vendor/skeleton.css" />
+
+
+</head>
+<body>
+  
+  <div class="container">
+    <div class="row">
+      <div class="column" style="margin-top: 15%; overflow: hidden">
+        <h4>Mentions of COVID on the NYTimes homepage</h4>
+
+        <button id="previous" style="margin-bottom: 20px;" class="btn">&lt; Past</button>
+        <button id="next" style="margin-bottom: 20px;" class="btn">Future &gt;</button>
+        <div id="cal"></div>
+
+      </div>
+    </div>
+  </div>
+  
+  
+</body>
+
+
+<script>
+  var cal = new CalHeatMap();
+  cal.init({
+  	itemSelector: "#cal",
+  	domain: "month",
+  	data: "results.json",
+  	start: new Date(2020, 0),
+  	cellSize: 25,
+  	range: 5,
+    previousSelector: "#previous",
+    nextSelector: "#next",
+    considerMissingDataAsZero: true,
+    legend: [0, 5, 8, 10],
+  	onClick: function(d, nb) {
+      var datestring = `${d.getFullYear()}/${("0"+(d.getMonth()+1)).slice(-2)}/${("0" + d.getDate()).slice(-2)}`
+      window.location = `https://static01.nyt.com/images/${datestring}/nytfrontpage/scan.pdf`
+  	}
+    
+    
+
+  });
+</script>
+
+</html>
+
+
+
