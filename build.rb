@@ -16,7 +16,7 @@ def download_nytimes_frontpage(start_date, end_date)
           file.write open("https://static01.nyt.com/images/#{current.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf").read
         end
       rescue OpenURI::HTTPError => ex
-        puts "Failed to download #{current.strftime('%Y/%m/%d')}"
+        puts "Failed to download #{current.strftime('%Y-%m-%d')} #{ex}"
       end
     end
   end
@@ -26,11 +26,18 @@ def generate_word_count_from_pdf
   puts "generating word count..."
   results = {}
   Dir[File.join("pdfs", "*.pdf")].each do |filename|
-    reader = PDF::Reader.new(filename)
-    reader.pages.each do |page|
-      current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
-      results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
+    
+    begin
+      reader = PDF::Reader.new(filename)
+      reader.pages.each do |page|
+        current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
+        results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
+      end
+    rescue OpenURI::HTTPError => ex
+      puts "Failed to read #{filename} #{ex}"
     end
+    
+    
   end
   puts "processed #{results.count} items"
   results
