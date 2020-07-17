@@ -11,8 +11,12 @@ def download_nytimes_frontpage(start_date, end_date)
     filename = File.join("pdfs", "#{current.to_s}.pdf")
     unless File.file? filename
       puts "downloading... #{current.to_s}"
-      File.open(filename, "wb") do |file|
-        file.write open("https://static01.nyt.com/images/#{current.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf").read
+      begin
+        File.open(filename, "wb") do |file|
+          file.write open("https://static01.nyt.com/images/#{current.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf").read
+        end
+      rescue OpenURI::HTTPError => ex
+        puts "Failed to download #{current.strftime('%Y/%m/%d')}"
       end
     end
   end
