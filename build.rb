@@ -13,7 +13,7 @@ def download_nytimes_frontpage(start_date, end_date)
   ( start_date .. end_date ).each do |current_time|
     puts "checking #{nytimes_url(current_time)}"
     filename = File.join("pdfs", "#{current_time.to_s}.pdf")
-    unless File.file? filename
+    # unless File.file? filename
       puts "saving... #{current_time.to_s}.pdf"
       begin
         File.open(filename, "wb") do |file|
@@ -22,7 +22,7 @@ def download_nytimes_frontpage(start_date, end_date)
       rescue => error
         puts "Failed to download #{nytimes_url(current_time)} #{error}"
       end
-    end
+    # end
   end
 end
 
