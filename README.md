@@ -4,3 +4,5 @@ This project was created to keep track how often Covid is mentioned on the front
 
 
 [Preview](https://eddietejeda.github.io/nytimes-covid-frontpage/)
+
+![](screenshot.png)
