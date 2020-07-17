@@ -14,12 +14,12 @@ def download_nytimes_frontpage(start_date, end_date)
     puts "checking #{nytimes_url(current_time)}"
     filename = File.join("pdfs", "#{current_time.to_s}.pdf")
     unless File.file? filename
-      puts "downloading... #{current_time.to_s}"
+      puts "downloading... #{current_time.to_s}.pdf"
       begin
         File.open(filename, "wb") do |file|
           file.write open().read
         end
-      rescue OpenURI::HTTPError => ex
+      rescue => error
         puts "Failed to download #{nytimes_url(current_time)} #{ex}"
       end
     end
@@ -30,7 +30,6 @@ def generate_word_count_from_pdf
   puts "generating word count..."
   results = {}
   Dir[File.join("pdfs", "*.pdf")].each do |filename|
-    
     begin
       puts "processing... #{filename}"
 
@@ -39,11 +38,9 @@ def generate_word_count_from_pdf
         current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
         results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
       end
-    rescue OpenURI::HTTPError => ex
-      puts "Failed to read #{filename} #{ex}"
+    rescue => error
+      puts "Failed to read #{filename} #{error}"
     end
-    
-    
   end
   puts "processed #{results.count} items"
   results
