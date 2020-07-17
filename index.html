@@ -63,12 +63,15 @@
 
 
 <script>
-  var cal = new CalHeatMap();
+  const PRODUCTION_URL="https://nytimes-covid-frontpage.s3.amazonaws.com";
+  const cal = new CalHeatMap();
+  const baseurl = (location.port == "8000") ? "./data" : PRODUCTION_URL;
+  
   cal.init({
   	itemSelector: "#cal",
   	domain: "month",
   	subDomainTextFormat: "%d",
-  	data: "https://nytimes-covid-frontpage.s3.amazonaws.com/results.json",
+  	data: `${baseurl}/results.json`,
   	start: new Date(2020, 0),
   	cellSize: 25,
   	tooltip: true,
