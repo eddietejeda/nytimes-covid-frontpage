@@ -18,9 +18,9 @@ jobs:
         path: |
           vendor/bundle
           pdfs
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        key: ${{ runner.os }}-cache-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-gems-
+          ${{ runner.os }}-cache-
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
