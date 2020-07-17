@@ -15,7 +15,11 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
-    - run: ruby build.rb
+    - name: Install bundler and run build command
+      run: |
+        gem install bundler
+        bundle install
+        ruby build.rb
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
