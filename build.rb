@@ -5,8 +5,8 @@ require 'open-uri'
 require 'json'
 
 
-def nytimes_url(d)
-  "https://static01.nyt.com/images/#{d.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf"
+def nytimes_url(date)
+  "https://static01.nyt.com/images/#{date.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf"
 end
 
 def download_nytimes_frontpage(start_date, end_date)
@@ -14,10 +14,10 @@ def download_nytimes_frontpage(start_date, end_date)
     puts "checking #{nytimes_url(current_time)}"
     filename = File.join("pdfs", "#{current_time.to_s}.pdf")
     unless File.file? filename
-      puts "downloading... #{current_time.to_s}.pdf"
+      puts "saving... #{current_time.to_s}.pdf"
       begin
         File.open(filename, "wb") do |file|
-          file.write open().read
+          file.write open(nytimes_url(current_time)).read
         end
       rescue => error
         puts "Failed to download #{nytimes_url(current_time)} #{error}"
