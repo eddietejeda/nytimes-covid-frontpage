@@ -5,18 +5,22 @@ require 'open-uri'
 require 'json'
 
 
+def nytimes_url(d)
+  "https://static01.nyt.com/images/#{d.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf"
+end
 
 def download_nytimes_frontpage(start_date, end_date)
-  ( start_date .. end_date ).each do |current|
-    filename = File.join("pdfs", "#{current.to_s}.pdf")
+  ( start_date .. end_date ).each do |current_time|
+    puts "checking #{nytimes_url(current_time)}"
+    filename = File.join("pdfs", "#{current_time.to_s}.pdf")
     unless File.file? filename
-      puts "downloading... #{current.to_s}"
+      puts "downloading... #{current_time.to_s}"
       begin
         File.open(filename, "wb") do |file|
-          file.write open("https://static01.nyt.com/images/#{current.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf").read
+          file.write open().read
         end
       rescue OpenURI::HTTPError => ex
-        puts "Failed to download #{current.strftime('%Y-%m-%d')} #{ex}"
+        puts "Failed to download #{nytimes_url(current_time)} #{ex}"
       end
     end
   end
@@ -28,6 +32,8 @@ def generate_word_count_from_pdf
   Dir[File.join("pdfs", "*.pdf")].each do |filename|
     
     begin
+      puts "processing... #{filename}"
+
       reader = PDF::Reader.new(filename)
       reader.pages.each do |page|
         current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
@@ -51,7 +57,7 @@ end
 
 
 start_date = DateTime.parse('2019-12-01').to_date # A month before the first covid case
-end_date = Date.today
+end_date = Date.today - 1
 
 download_nytimes_frontpage(start_date, end_date)
 save_json(generate_word_count_from_pdf, "results.json")
