@@ -20,7 +20,7 @@ def download_nytimes_frontpage(start_date, end_date)
         file.write open(nytimes_url(current_time)).read
       end
     rescue => error
-      puts "Failed to download #{nytimes_url(current_time)} #{error}"
+      puts "Failed to download #{nytimes_url(current_time)} / #{error}"
     end
   # end
   end
@@ -32,14 +32,13 @@ def generate_word_count_from_pdf
   Dir[File.join("pdfs", "*.pdf")].each do |filename|
     begin
       puts "processing... #{filename}"
-
       reader = PDF::Reader.new(filename)
       reader.pages.each do |page|
         current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
         results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
       end
     rescue => error
-      puts "Failed to read #{filename} #{error}"
+      puts "Failed to read #{filename} / #{error}"
     end
   end
   puts "processed #{results.count} items"
@@ -52,9 +51,27 @@ def save_json(data, filename)
   end
 end
 
+def json_incremented?(new_data, current_filename)
+  begin
+    contents = File.read(File.join("data",current_filename))
+  rescue => error
+    contents = "{}"
+  end
+  old_data = JSON.parse( contents )  
+  puts "new count: #{new_data.count} old count: #{old_data.count}"
+  new_data.count > old_data.count
+end
+
 
 start_date = DateTime.parse('2019-12-01').to_date # A month before the first covid case
 end_date = Date.today - 1
 
 download_nytimes_frontpage(start_date, end_date)
-save_json(generate_word_count_from_pdf, "results.json")
+new_data = generate_word_count_from_pdf
+
+if json_incremented?(new_data, "results.json")
+  puts "saving new file"
+  save_json(new_data, "results.json")
+else
+  puts "new file not saved"
+end
