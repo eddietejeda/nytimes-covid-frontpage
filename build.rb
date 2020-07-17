@@ -20,7 +20,7 @@ def download_nytimes_frontpage(start_date, end_date)
           file.write open().read
         end
       rescue => error
-        puts "Failed to download #{nytimes_url(current_time)} #{ex}"
+        puts "Failed to download #{nytimes_url(current_time)} #{error}"
       end
     end
   end
