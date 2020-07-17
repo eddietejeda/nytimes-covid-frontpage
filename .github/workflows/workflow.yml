@@ -12,12 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    
+    - uses: actions/cache@v2
+      with:
+        path: |
+          vendor/bundle
+          pdfs
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
     - name: Install bundler and run build command
       run: |
         gem install bundler
+        bundle config path vendor/bundle
         bundle install
         ruby build.rb
     - uses: jakejarvis/s3-sync-action@master
