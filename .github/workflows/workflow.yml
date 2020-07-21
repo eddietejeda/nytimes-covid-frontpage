@@ -1,30 +1,22 @@
-name: Upload Data
+name: Process data and upload results
 
 on:
   push:
     branches:
     - master
   schedule:
-  - cron: "0 13 * * 1"
+    - cron:  '0 13 * * 1'
+
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    
-    - uses: actions/cache@v2
-      with:
-        path: |
-          vendor/bundle
-          pdfs
-        key: ${{ runner.os }}-cache-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-cache-
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
-    - name: Install bundler and run build command
+    - name: Install bundler and gems, then run the ruby build command
       run: |
         gem install bundler
         bundle config path vendor/bundle
