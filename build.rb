@@ -11,18 +11,18 @@ end
 
 def download_nytimes_frontpage(start_date, end_date)
   ( start_date .. end_date ).each do |current_time|
-    puts "checking #{nytimes_url(current_time)}"
+    puts "Checking URL #{nytimes_url(current_time)}"
     filename = File.join("pdfs", "#{current_time.to_s}.pdf")
-  # unless File.file? filename
-    puts "saving... #{current_time.to_s}.pdf"
+  if File.zero?(filename)
     begin
+      puts "Saving file: #{current_time.to_s}.pdf"
       File.open(filename, "wb") do |file|
         file.write open(nytimes_url(current_time)).read
       end
     rescue => error
-      puts "Failed to download #{nytimes_url(current_time)} / #{error}"
+      puts "Failed to save #{nytimes_url(current_time)} / #{error}"
     end
-  # end
+  end
   end
 end
 
@@ -31,7 +31,7 @@ def generate_word_count_from_pdf
   results = {}
   Dir[File.join("pdfs", "*.pdf")].each do |filename|
     begin
-      puts "processing... #{filename}"
+      puts "Analyzing... #{filename}"
       reader = PDF::Reader.new(filename)
       reader.pages.each do |page|
         current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
@@ -41,7 +41,7 @@ def generate_word_count_from_pdf
       puts "Failed to read #{filename} / #{error}"
     end
   end
-  puts "processed #{results.count} items"
+  puts "Processed #{results.count} items"
   results
 end
 
@@ -58,7 +58,7 @@ def json_incremented?(new_data, current_filename)
     contents = "{}"
   end
   old_data = JSON.parse( contents )  
-  puts "new count: #{new_data.count} old count: #{old_data.count}"
+  puts "New count: #{new_data.count} Old count: #{old_data.count}"
   new_data.count > old_data.count
 end
 
@@ -70,8 +70,8 @@ download_nytimes_frontpage(start_date, end_date)
 new_data = generate_word_count_from_pdf
 
 if json_incremented?(new_data, "results.json")
-  puts "saving new file"
+  puts "Generating new JSON file"
   save_json(new_data, "results.json")
 else
-  puts "new file not saved"
+  puts "No need to generate a new JSON"
 end

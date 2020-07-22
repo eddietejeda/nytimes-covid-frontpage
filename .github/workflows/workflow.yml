@@ -1,4 +1,4 @@
-name: Download PDF, analyze homepage, and upload JSON
+name: Download front page PDFs, analyze text, and upload JSON
 
 on:
   push:
