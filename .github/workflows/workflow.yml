@@ -1,4 +1,4 @@
-name: Process data and upload results
+name: Download PDF, analyze homepage, and upload JSON
 
 on:
   push:
