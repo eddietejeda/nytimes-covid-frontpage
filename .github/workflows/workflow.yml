@@ -3,7 +3,7 @@ name: Download PDF, analyze homepage, and upload JSON
 on:
   push:
     branches:
-    - master
+    - main
   schedule:
     - cron:  '0 16 * * *'
 
@@ -16,6 +16,13 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: |
+          vendor/bundle/
+          pdfs/
+        key: ${{ runner.os }}-cache
     - name: Install bundler and gems, then run the ruby build command
       run: |
         gem install bundler
