@@ -2,11 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">  
   <script type="text/javascript" src="./vendor/d3.min.js"></script>
   <script type="text/javascript" src="./vendor/cal-heatmap.min.js"></script>
   <link rel="stylesheet" href="./vendor/cal-heatmap.css" />
   <link rel="stylesheet" href="./vendor/normalize.css" />
   <link rel="stylesheet" href="./vendor/skeleton.css" />
+  <link rel="stylesheet" href="./vendor/style.css" />
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -18,18 +20,17 @@
 
     gtag('config', 'UA-172828387-1');
   </script>
-
+  
 </head>
 <body>
-  
   <div class="container" style="overflow: hidden">
     <div class="row" style="margin-top: 5%">
       <div class="column" style="margin-top: 0%;">
-        <h2>COVID-19 mentions on the NYTimes front page</h2>
+        <h1><b>COVID-19 mentions on <br>the NYTimes front page</b></h1>
         <div id="cal"></div>        
       </div>
       
-      <div class="row">
+      <div class="row" style="margin-top: 5%">
         <div class="twelve columns ">
           <button id="previous" class="u-pull-left" class="btn">&lt; Past</button>
           <button id="next" class="u-pull-right" class="btn">Future &gt;</button>
@@ -37,12 +38,12 @@
       </div>
 
       <div class="row" style="margin-top: 5%">      
-        🔗 click on square to open PDF of NYTimes frontpage
+        <em>🔗 click on square to open PDF of NYTimes front page</em>
       </div>
         
       <div class="row" style="margin-top: 5%">      
 
-        <h5>Important Dates</h5>
+        <h3>Important Dates</h3>
         <ul>
           <li>December 6, 2019 - The first documented COVID-19 hospital admission.<sup><a href="https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic">1</a></sup></li>
           <li>January 9, 2020 - WHO reported that Chinese authorities determined that the outbreak is caused by a novel coronavirus.<sup><a href="https://www.who.int/news-room/detail/29-06-2020-covidtimeline">2</a></sup></li>          
@@ -51,10 +52,10 @@
         </ul>
         
 
-        <h5>What is this site?</h5>
-        <p>I want to track how coverage of COVID-19 changes over time and pinpoint precisely when the virus stops being front-page news. <b>More directly, I want to know when we will have three consecutive days where COVID-19-related news is not front-page news?</b> This is a simple implementation that downloads a PDF of the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. </p>
+        <h3>What is this site?</h3>
+        <p>I want to track how coverage of COVID-19 changes over time and pinpoint precisely when the virus stops being front-page news. More directly, I want to know when we will have three consecutive days where COVID-19-related news is not front-page news? This is a simple implementation that downloads a PDF of the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. </p>
 
-        <h5>Have suggestions on how to improve the site?</h5>
+        <h3>Have suggestions on how to improve the site?</h3>
         <p>You can review the <a href="https://github.com/eddietejeda/nytimes-covid-frontpage">source code of this site on Github</a>.</p>
 
         
