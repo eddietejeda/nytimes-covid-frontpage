@@ -10,6 +10,37 @@
   <link rel="stylesheet" href="./vendor/skeleton.css" />
   <link rel="stylesheet" href="./vendor/gh-fork-ribbon.css" />
 
+  <style>
+    .legend-tooltip{
+      position: absolute; 
+      top: 5px; 
+      margin-right: 10px; 
+      width: 10px; 
+      height: 10px; 
+      background-color:#ededed;
+    }
+    .legend-square{
+      font-size: 75%;
+    }
+    .legend-square div{
+      position: relative;
+    }
+    .legend-square > div > em{
+      margin-left: 20px;
+    }
+    
+    .container{
+      overflow: hidden;
+    }
+    
+    .row{
+      margin-top: 5%;
+    }
+    .column{
+      margin-top: 0%;
+    }
+  </style>
+
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172828387-1"></script>
@@ -25,26 +56,31 @@
 <body>
   <a class="github-fork-ribbon right-top" href="https://github.com/eddietejeda/nytimes-covid-frontpage" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
       
-  <div class="container" style="overflow: hidden">
-    <div class="row" style="margin-top: 5%">
-      <div class="column" style="margin-top: 0%;">
-        <h1><b>COVID-19 mentions on <br>the NYTimes front page</b></h1>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <h1><b>COVID-19 mentions<br>on the NYTimes front page</b></h1>
         <div id="cal"></div>        
       </div>
       
-      <div class="row" style="margin-top: 5%">
+      <div class="row">
         <div class="twelve columns ">
           <button id="previous" class="u-pull-left" class="btn">&lt; Past</button>
           <button id="next" class="u-pull-right" class="btn">Future &gt;</button>
         </div>
       </div>
 
-      <div class="row" style="margin-top: 5%">      
+      <div class="row legend-square">
+        <strong>Number of mentions</strong>
+        <div><span class="legend-tooltip" style="background-color: #ededed"></span><em>0 mentions</em></div>
+        <div><span class="legend-tooltip" style="background-color: #9cc069"></span><em>between 0 - 10</em></div>
+        <div><span class="legend-tooltip" style="background-color: #669d45"></span><em>between 10 - 20</em></div>
+        <div><span class="legend-tooltip" style="background-color: #637939"></span><em>between 20 - 30</em></div>
+        <div><span class="legend-tooltip" style="background-color: #3b6427"></span><em>more than 30 mentions</em></div>
         <em>🔗 click on square to open PDF of NYTimes front page</em>
       </div>
         
-      <div class="row" style="margin-top: 5%">      
-
+      <div class="row">
         <h3>Important Dates</h3>
         <ul>
           <li>December 6, 2019 - The first documented COVID-19 hospital admission.<sup><a href="https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic">1</a></sup></li>
@@ -55,7 +91,11 @@
         
 
         <h3>What is this site?</h3>
-        <p>I want to track how coverage of COVID-19 changes over time and pinpoint precisely when the virus stops being front-page news. <b>More directly, I want to know when we will have three consecutive days where COVID-19-related news is not front-page news.</b> This is a simple implementation that downloads a PDF of the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. </p>
+        <p>I want to track how coverage of COVID-19 changes over time and pinpoint precisely when the virus stops being front-page news. <b>More specifically, I want to know when we will have three consecutive days where COVID-19-related news is not front-page news.</b> This site uses a script that downloads a PDF of the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. </p>
+        
+        <p>
+          In the next phase of this project, I want to create a visualization of people's estimates. If you want to contribute anonymously, <a href="https://forms.gle/kakbbTMQWrS63jFN9">feel fill out this Google Form</a>.
+        </p>
 
         <h3>Have suggestions on how to improve the site?</h3>
         <p>You can review the <a href="https://github.com/eddietejeda/nytimes-covid-frontpage">source code of this site on Github</a>.</p>
@@ -89,6 +129,7 @@
     nextSelector: "#next",
     considerMissingDataAsZero: true,
     legend: [0, 10, 20, 30],
+    displayLegend: false,
     legendTitleFormat: {
       lower: "{min} {name}",
       inner: "between {down} and {up} {name}",
