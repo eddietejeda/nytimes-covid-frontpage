@@ -3,7 +3,15 @@ require 'date'
 require 'pdf-reader'
 require 'open-uri'
 require 'json'
+require 'net/http'
 
+def data_file(filename)
+  if(ENV['APP_ENV'] == "production")
+    "https://nytimes-covid-frontpage.s3.amazonaws.com/#{filename}"
+  else    
+    File.join("data",filename)
+  end
+end
 
 def nytimes_url(date)
   "https://static01.nyt.com/images/#{date.strftime('%Y/%m/%d')}/nytfrontpage/scan.pdf"
@@ -36,7 +44,7 @@ def generate_word_count_from_pdf
       puts "🔍  Analyzing... #{filename}"
       reader = PDF::Reader.new(filename)
       reader.pages.each do |page|
-        current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i      
+        current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i
         results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
       end
     rescue => error
@@ -53,23 +61,33 @@ def save_json(data, filename)
   end
 end
 
-def json_incremented?(new_data, current_filename)
+def json_incremented?(new_data, old_data_filename)
   begin
-    contents = File.read(File.join("data",current_filename))
+    if File.file?(old_data_filename)
+      response = File.open(fileold_data_filenamename).read
+    elsif old_data_filename =~ URI::regexp
+      uri = URI(data_file(old_data_filename))
+      response = Net::HTTP.get(uri)
+    else
+      response = "{}"
+    end
+    old_data = JSON.parse(response)
   rescue => error
-    contents = "{}"
+    puts "❌ Error downloading / #{error}"
   end
-  old_data = JSON.parse( contents )  
+  
   puts "New count: #{new_data.count} Old count: #{old_data.count}"
   new_data.count > old_data.count
+  
 end
 
 def main(start_date:, end_date:)
+  puts "APP_ENV=#{ENV['APP_ENV'] || 'development'}"
   download_nytimes_frontpage(start_date, end_date)
   new_data = generate_word_count_from_pdf
 
   if json_incremented?(new_data, "results.json")
-    puts "Generating new JSON file"
+    puts "Writing new JSON file"
     save_json(new_data, "results.json")
   else
     puts "No need to generate a new JSON"
@@ -77,4 +95,4 @@ def main(start_date:, end_date:)
 end
 
 
-main(start_date: DateTime.parse('2019-12-01').to_date, end_date: Date.today)
+main(start_date: DateTime.parse('2020-07-30').to_date, end_date: Date.today)
