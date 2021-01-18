@@ -95,4 +95,4 @@ def main(start_date:, end_date:)
 end
 
 
-main(start_date: DateTime.parse('2020-07-30').to_date, end_date: Date.today)
+main(start_date: DateTime.parse('2020-01-01').to_date, end_date: Date.today)
