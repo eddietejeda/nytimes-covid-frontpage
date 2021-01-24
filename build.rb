@@ -4,6 +4,9 @@ require 'pdf-reader'
 require 'open-uri'
 require 'json'
 require 'net/http'
+require 'active_support'
+require 'active_support/core_ext/date/calculations'
+
 
 def data_file(filename)
   if(ENV['APP_ENV'] == "production")
@@ -44,7 +47,8 @@ def generate_word_count_from_pdf
       puts "🔍  Analyzing... #{filename}"
       reader = PDF::Reader.new(filename)
       reader.pages.each do |page|
-        current_time = Date.parse(File.basename(filename, File.extname(filename))).to_time.to_i
+        # Advancing 1 day works around a cal-heatmap off-by-one date bug
+        current_time = Date.parse(File.basename(filename, File.extname(filename))).advance(days: 1).to_time.to_i
         results.merge!("#{current_time}": page.text.downcase.scan(/(?=(corona|covid|virus|pandemic|wuhan))/).count)
       end
     rescue => error
@@ -93,6 +97,5 @@ def main(start_date:, end_date:)
     puts "No need to generate a new JSON"
   end
 end
-
 
 main(start_date: DateTime.parse('2020-01-01').to_date, end_date: Date.today)
