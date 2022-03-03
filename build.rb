@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'date'    
+require 'date'
 require 'pdf-reader'
 require 'open-uri'
 require 'json'
@@ -11,7 +11,7 @@ require 'active_support/core_ext/date/calculations'
 def data_file(filename)
   if(ENV['APP_ENV'] == "production")
     "https://nytimes-covid-frontpage.s3.amazonaws.com/#{filename}"
-  else    
+  else
     File.join("data",filename)
   end
 end
