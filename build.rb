@@ -68,7 +68,7 @@ end
 def json_incremented?(new_data, old_data_filename)
   begin
     if File.file?(old_data_filename)
-      response = File.open(fileold_data_filenamename).read
+      response = File.open(old_data_filenamename).read
     elsif old_data_filename =~ URI::regexp
       uri = URI(data_file(old_data_filename))
       response = Net::HTTP.get(uri)
