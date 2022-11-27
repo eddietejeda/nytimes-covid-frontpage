@@ -177,7 +177,7 @@
     },
   	onClick: function(d, nb) {
       var datestring = `${d.getFullYear()}/${("0"+(d.getMonth()+1)).slice(-2)}/${("0" + d.getDate()).slice(-2)}`
-      window.location = `https://static01.nyt.com/images/${datestring}/nytfrontpage/scan.pdf`
+      window.open(`https://static01.nyt.com/images/${datestring}/nytfrontpage/scan.pdf`, '_blank');
   	}
   });
 </script>
