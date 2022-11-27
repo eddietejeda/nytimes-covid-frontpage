@@ -81,27 +81,66 @@
       </div>
         
       <div class="row">
-        <h3>Important Dates</h3>
+        
+
+        <h3>What was this site?</h3>
+        <p>
+          I wanted to track coverage of COVID-19 over time and pinpoint precisely when the virus 
+          stopped being frontpage news. <b>More specifically, I want to know when we will have three consecutive days 
+          where COVID-19 was not frontpage news.</b> This site uses a script that downloads a PDF of 
+          the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. 
+        </p>
+
+        
+        <h3>Conclusion</h3>
+        <p>This project is complete.  According to this data, COVID-19-related news started appearing on the frontpage on January 21, 2020.<p>
+        <p>It took 353 days for the first (and second) occasion. The headlines that took precedence were:<br>
+          
+          <ul>
+            <li> January 7th 2022 - Trump Incites Mob</li>
+            <li> January 8th 2022 - Calls Grow To Remove Trump As U.S. Officials Head for Exit</li>
+          </ul>
+        </p>
+          
+        <p>After 834 days, we had 3 consecutive days. The headlines that took precedence were:<br>
+
+          <ul>
+            <li> May 3, 2022 - Leaked Draft Shows Court Would Topple Roe v. Wade<br>
+            <li> May 4, 2022 - Draft Abortion Ruling Signals Seismic Political Shift<br>
+            <li> May 5, 2022 - Leak Intensifies View That Court Is Too Political<br>
+          </ul>
+  
+          
+        </p>
+
+      
+        <h3>Key Dates</h3>
+
+        <p>You can download a PDF of the frontpage by clicking on the tiles above. I did not manually confirm the data. If you spot any problems, <a href="https://github.com/eddietejeda/nytimes-covid-frontpage">submit an issue on Github</a>.</p>
+          
+        <p>For orientation, I created a timeline of key events. <a href="https://archive.ph/Enrp7">Source</a></p>
+        
         <ul>
           <li>December 6, 2019 - The first documented COVID-19 hospital admission.<sup><a href="https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic">1</a></sup></li>
           <li>January 9, 2020 - WHO reported that Chinese authorities determined that the outbreak is caused by a novel coronavirus.<sup><a href="https://www.who.int/news-room/detail/29-06-2020-covidtimeline">2</a></sup></li>          
-          <li>January 28, 2020 - The first time COVID-19 gets top billing on front page.</li>    
-          <li>February 11, 2020 - WHO announced that the disease caused would be named COVID-19. <sup><a href="https://www.who.int/news-room/detail/29-06-2020-covidtimeline">3</a></sup></li>
-          <li>October 1, 2020 - White House COVID-19 outbreak<sup><a href="https://en.wikipedia.org/wiki/White_House_COVID-19_outbreak">4</a></sup></li>
-
+          <li>January 21, 2020— CDC Confirms First US Coronavirus Case.</li>    
+          <li>March 19, 2020 — California Issues Statewide Stay-at-Home Order</li>
+          <li>July 22, 2020 — HHS, DOD Announce Vaccine Distribution Agreement With Pfizer and BioNTech</li>
+          <li>June 10, 2020 — US COVID-19 Cases Reach 2 Million</li>
+          <li>August 3, 2020 — New US Pandemic Phase; US to Pay Sanofi, GlaxoSmithKline $2B for Vaccine</li>
+          <li>September 25, 2020 — Midwest States See Increase in COVID-19 Cases</li>
+          <li>September 28, 2020 — Global COVID-19 Deaths Surpass 1 Million</li>
+          <li>October 2, 2020 — Trump, First Lady Test Positive for COVID-19; Trump Enters Hospital</li>
+          <li>October 19, 2020 — Global Cases Top 40 Million</li>
+          <li>February 19, 2021 - Pfizer/BioNTech First Dose Effective in Real-World Data</li>
+          <li>February 26, 2021 - 50 Million COVID-19 Vaccine Doses Administered</li>
+          <li>March 1, 2021 - J&amp;J Vaccine Rollout Begins</li>
+          <li>March 19, 2021 - United States Administers 100 Millionth Vaccine</li>
+          <li>August 3, 2021 - 70% of US Vaccinated</li>
+          <li>November 19, 2021 - FDA Approves COVID-19 Boosters for All Adults</li>        
         </ul>
+
         
-
-        <h3>What is this site?</h3>
-        <p>I want to track how coverage of COVID-19 changes over time and pinpoint precisely when the virus stops being front-page news. <b>More specifically, I want to know when we will have three consecutive days where COVID-19-related news is not front-page news.</b> This site uses a script that downloads a PDF of the New York Times front page and looks for the following keywords: corona, covid, virus, pandemic, wuhan. </p>
-        
-        <p>
-          In the next phase of this project, I want to create a visualization of people's estimates. If you want to contribute anonymously, <a href="https://forms.gle/kakbbTMQWrS63jFN9">feel fill out this Google Form</a>.
-        </p>
-
-        <h3>Have suggestions on how to improve the site?</h3>
-        <p>You can review the <a href="https://github.com/eddietejeda/nytimes-covid-frontpage">source code of this site on Github</a>.</p>
-
         
         
       </div>
@@ -123,7 +162,7 @@
   	domain: "month",
   	subDomainTextFormat: "%d",
   	data: `${baseurl}/results.json`,
-  	start: new Date().setDate(0),
+  	start: new Date("January 1, 2022 01:15:00"),
   	cellSize: 25,
   	tooltip: true,
   	range: 7,
